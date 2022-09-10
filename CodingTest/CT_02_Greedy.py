@@ -1,0 +1,76 @@
+# N//500 + N%500//100 + N%500%100//50 + N%500%100%50//10
+"""
+coin_types = [500, 100, 50, 10]
+count = 0
+n = int(input('비용(원): '))
+for coin in coin_types:
+    count += n // coin
+    n = n % coin
+print(f'{count}개')
+"""
+# 큰 수의 법칙
+from random import randint
+
+nums = []   #N개의 랜덤한 자연수를 갖는 리스트
+condition = input('입력: ')
+N, M, K = condition.split()
+# 위 2줄을 한줄로 표현하고 정수형 변환하면 다음과 같다.
+# >>> n, m, k = map(int, input().split())
+
+for i in range(int(N)): # randint 함수로 임의의 값 5개 받기
+    num = randint(1,10001)
+    nums.append(num)
+    print(num, end=' ')
+# n개의 수 공백으로 구분하여 입력받기
+# data = list(map(int, input().split()))
+
+nums = sorted(nums,reverse=True)    # 리스트 내림차순 정렬
+#data = sorted(data,reverse=True)
+
+#계산을 위한 변수 선언(->불필요한 변수가 너무 많음)
+cnt = 0
+cnt2 = 0
+idx_num = 0
+t_n = 0
+# first = data[0] -> 가장 큰 수
+# second = data[1] -> 2번째로 큰 수
+# result = 0
+
+while cnt < int(M):
+    while cnt2 < int(K) and cnt < int(M):
+        t_n += nums[idx_num]
+        cnt2 += 1
+        cnt += 1
+    if cnt < int(M):
+        idx_num = 1
+        t_n += nums[idx_num]
+        cnt += 1
+        cnt2 = 0
+        idx_num = 0
+
+print(t_n)
+
+""" 
+1)변수 선언 줄이고 단순하게 푸는 방법
+while True:
+    for i in range(k):
+        if m == 0:
+            break
+        result += first
+        m -= 1
+    if m == 0:
+        break
+    result += second
+    m -= 1
+    
+2) 알고리즘 이용하여 푸는 방법
+# 가장 큰 수가 더해지는 횟수 계산
+count = int(m / (k + 1)) * k
+count += m % (k + 1)
+
+result = 0
+result += (count) * first # 가장 큰 수 더하기
+result += (m - count) * second # 두 번째로 큰 수 더하기
+
+print(result) # 최종 답안 출력    
+"""
